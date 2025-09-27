@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Liftogarden - Panel de Control de Macetas Inteligentes</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet" />
+<!-- Material Icons CDN -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <!-- Logo a la izquierda -->
+    <div class="logo" tabindex="0" aria-label="Liftogarden inicio">
+      <img src="logo.png" class="logo-img" />
+      Liftogarden
+    </div>
+
+    <!-- Navegación + Perfil a la derecha -->
+    <div class="nav-right">
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <!-- Públicos -->
+        <a id="nav-home" class="nav-public active">Inicio</a>
+        <a id="nav-shop" class="nav-public">
+          <span class="material-icons" style="font-size:18px;vertical-align:middle;">shopping_cart</span>
+          Tienda
+        </a>
+        <a id="nav-about" class="nav-public">Sobre Nosotros</a>
+
+        <!-- Solo logueados -->
+        <a id="nav-dashboard" class="nav-auth">Panel de Control</a>
+        <a id="nav-tutorial" class="nav-auth">Tutorial</a>
+        <a id="notif-btn" class="nav-auth">
+          Notificaciones <span id="notif-count" style="color:#d05540;"></span>
+        </a>
+      </nav>
+
+      <!-- Perfil -->
+      <button class="profile-button" id="profile-btn" type="button" tabindex="0">
+        <img class="profile-photo" src="img/perfil.png" alt="Foto de perfil" />
+        <span class="profile-status" aria-hidden="true"></span>
+        <span id="profile-text">Perfil</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAV MÓVIL -->
+  <nav class="mobile-nav" aria-label="Navegación móvil">
+    <!-- Públicos -->
+    <a id="nav-home-mobile" class="nav-public active" tabindex="0">Inicio</a>
+    <a id="nav-shop-mobile" class="nav-public" tabindex="0">
+      <span class="material-icons" style="font-size:20px; vertical-align:middle;">shopping_cart</span>
+      Tienda
+    </a>
+    <a id="nav-about-mobile" class="nav-public" tabindex="0">Sobre Nosotros</a>
+
+    <!-- Solo logueados -->
+    <a id="nav-dashboard-mobile" class="nav-auth" tabindex="0">Panel de Control</a>
+    <a id="nav-tutorial-mobile" class="nav-auth" tabindex="0">Tutorial</a>
+    <a id="notif-btn-mobile" class="nav-auth" tabindex="0">
+      Notificaciones <span id="notif-count-mobile" style="color:#d05540;"></span>
+    </a>
+
+    <!-- Perfil móvil -->
+    <button class="profile-button-mobile" aria-haspopup="true" aria-expanded="false" aria-controls="profile-dropdown-mobile" type="button" tabindex="0">
+      <img class="profile-photo" src="..." alt="Foto perfil móvil" width="40" height="40" />
+      <span class="profile-status" aria-hidden="true"></span>
+      <span id="profile-text-mobile">Perfil</span>
+    </button>
+
+    <div class="profile-dropdown-mobile" id="profile-dropdown-mobile" role="menu" tabindex="-1">
+      <!-- Contenido cargado dinámicamente por JS -->
+    </div>
+  </nav>
+</header>
+
+
+<!-- Panel de notificaciones (persistentes) -->
+<div id="notif-messages" class="notif-panel"></div>
+
+<!-- Contenedor global para toasts flotantes -->
+<div id="notifications" class="notifications-container"></div>
+
+<main>
+  <!-- Contenedor de la página de inicio -->
+  <section id="landing-page" class="active" aria-label="Contenido de la página de inicio">
+    <section class="landing-hero" role="banner" aria-labelledby="hero-title" aria-describedby="hero-desc">
+      <h1 id="hero-title">Cuidado Inteligente de Plantas Simplificado</h1>
+      <p id="hero-desc">Liftogarden te ayuda a monitorear y gestionar tus plantas sin esfuerzo con seguimiento inteligente e información útil.</p>
+      <button class="cta-btn" id="hero-get-started-btn" aria-label="Empezar con Liftogarden">Empezar</button>
+    </section>
+    <section class="features-section" aria-label="Características clave">
+      <article class="feature-card" tabindex="0">
+        <span class="feature-icon material-icons" aria-hidden="true">water_drop</span>
+        <h3 class="feature-title">Monitoreo de Agua en Tiempo Real</h3>
+        <p class="feature-desc">Mantén un registro de los niveles de agua de tus plantas y nunca más olvides regarlas.</p>
+      </article>
+      <article class="feature-card" tabindex="0">
+        <span class="feature-icon material-icons" aria-hidden="true">local_florist</span>
+        <h3 class="feature-title">Gestión de Nutrientes</h3>
+        <p class="feature-desc">Monitorea los niveles de vitaminas y fertilizantes para asegurar que tus plantas se mantengan sanas y vibrantes.</p>
+      </article>
+      <article class="feature-card" tabindex="0">
+        <span class="feature-icon material-icons" aria-hidden="true">notifications_active</span>
+        <h3 class="feature-title">Alertas y Notificaciones Inteligentes</h3>
+        <p class="feature-desc">Recibe alertas oportunas cuando tus plantas necesiten atención o los suministros se estén agotando.</p>
+      </article>
+    </section>
+  </section>
+<!-- Contenedor del Tutorial -->
+  <section id="tutorial-section" class="hidden" aria-label="Tutorial paso a paso">
+    <div class="tutorial-container">
+      <div class="manual-text-box">
+        <img src="50f238be-c3a9-4f9a-9bb3-341c9c7a1590.png" alt="Manual visual de instalación" class="manual-logo" />
+        <h2>Manual de Instalación</h2>
+        <p><strong>Paso 1:</strong> Rellenar con tierra hasta cubrir el dispositivo de dentro.</p>
+        <p><strong>Paso 2:</strong> En caso de ser una planta ya desarrollada, que las raíces queden cubiertas y a una altura cercana al dispositivo; en caso de ser una planta no desarrollada, simplemente cubrir con más tierra y enterrarla normalmente.</p>
+        <p><strong>Paso 3:</strong> Conectar el puerto USB que se encuentra a un costado y a la altura del dispositivo, esto permitirá cargar el dispositivo.</p>
+        <p><strong>Paso 4:</strong> Mientras tanto, accede a nuestra página web e inicia sesión para poder hacer un control sobre tu planta.</p>
+        <p><strong>Paso 5:</strong> Dirigirse al apartado de "Panel" y apretar el botón "Crear planta". Responder a las preguntas y apretar aceptar.</p>
+        <p><strong>Paso 6:</strong> En la ventana generada se puede ver la cantidad de cada suministro.</p>
+        
+        <h2>Compartimientos</h2>
+        <p><strong>Paso 1:</strong> Diluir el fertilizante líquido o vitamina en la cantidad adecuada de agua.</p>
+        <p><strong>Paso 2:</strong> Revisar los tubos de silicona sobre salientes y rellenar el tubo rojo con 200ml de fertilizante, y el tubo amarillo con 200 ml de vitamina. El agua debe ingresar en el tubo restante.</p>
+        <p><strong>Paso 3:</strong> Revisar en la página web si se formulan como llenos los compartimientos.</p>
+  
+        <h2>Agregados</h2>
+        <p>Junto con la maceta verá un plato plástico hondo, este siempre debe encontrarse por debajo de la maceta.</p>
+  
+        <p style="margin-top:24px">En caso de consultas revisar el apartado "Ayuda". Si tu duda no aparece ahí, mandanos un mensaje.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenedor del panel de control -->
+  <section id="dashboard" aria-label="Contenido del panel de control" class="hidden">
+    <div class="dashboard-header">
+      <h1>Mis Plantas</h1>
+      <button id="new-plant-btn" aria-haspopup="dialog" aria-controls="new-plant-modal">+ Nueva Planta</button>
+    </div>
+    </div>
+    <section aria-live="polite" aria-relevant="additions removals" class="plant-grid" id="plant-list">
+      <!-- Tarjetas de plantas insertadas por JS aquí -->
+    </section>
+  </section>
+
+  <!-- Sección de inicio de sesión/registro -->
+  <section id="auth-section" aria-label="Inicio de sesión y registro" class="hidden">
+    <h2 id="auth-title">Registrarse</h2>
+    <form id="login-form" class="hidden" action="" method="post">
+      <label for="login-email">Correo electrónico</label>
+      <input type="email" id="login-email" name="email" required autocomplete="email" placeholder="tu@ejemplo.com" />
+      <label for="login-password">Contraseña</label>
+      <input type="password" id="login-password" name="ac_pass" required autocomplete="current-password" placeholder="Introduce tu contraseña" />
+      <button type="submit" class="btn-submit">Iniciar Sesión</button>
+    </form>
+    
+    <form id="register-form" action="registro.php" method="post">
+      <label for="register-username">Nombre de usuario</label>
+      <input type="text" id="register-username" name="nombre" required placeholder="Ej: Rocío123" />
+
+      <label for="register-email">Correo electrónico</label>
+      <input type="email" id="register-email" name="email" required placeholder="tu@ejemplo.com" />
+
+      <label for="register-password">Contraseña</label>
+      <input type="password" id="register-password" name="contraseña" required placeholder="Contraseña" />
+      
+      <label for="register-confirm-password">Confirmar contraseña</label>
+      <input type="password" id="register-confirm-password" name="confirm-password" required placeholder="Repetí la contraseña" />
+      
+      <button type="submit" value="enviar">Registrarse</button>
+    </form>
+    
+    <p class="toggle-auth">
+      ¿Ya tienes una cuenta? <a href="#" id="show-login">Inicia sesión aquí</a>
+    </p>
+    <p class="toggle-auth">
+      ¿No tienes una cuenta? <a href="#" id="show-register">Registrate aquí</a>
+    </p>
+  </section>
+
+<!-- Sección Tienda -->
+<section id="shop-section" class="hidden" aria-label="Tienda de productos Liftogarden">
+  <div class="shop-container">
+    <h1 class="shop-title">Nuestra Tienda</h1>
+    <div class="shop-grid">
+      <article class="product-card horizontal">
+        <img src="Banner.jpg" alt="Maceta Inteligente Liftogarden" class="product-img" />
+        
+        <div class="product-info">
+          <h2 class="product-name">Maceta Inteligente Liftogarden</h2>
+          <p class="product-desc">
+            La <strong>Maceta Inteligente Liftogarden</strong> cuida de tus plantas automáticamente.  
+            Sus <b>sensores de agua, luz, nutrientes y fertilizante</b> monitorean en tiempo real.  
+            <br><br>
+            Con conexión a nuestra app, recibís <b>notificaciones inteligentes</b> para mantenerlas siempre sanas.  
+            Ideal para casas, oficinas y para quienes no tienen tiempo o experiencia en jardinería.
+          </p>
+          <p class="product-price">$49.990 ARS</p>
+          <div class="product-buttons">
+            <button class="btn-shop btn-buy" data-product="Maceta Inteligente Liftogarden" data-price="49990">Comprar</button>
+            <button class="btn-shop btn-add-cart" data-product="Maceta Inteligente Liftogarden" data-price="49990">Añadir al carrito</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Carrito desplegable -->
+      <div id="cart-panel" class="cart-panel hidden">
+        <h2>🛒 Tu carrito</h2>
+        <ul id="cart-list"></ul>
+        <p id="cart-total">Total: $0</p>
+        <button class="btn-shop" id="checkout-btn">Finalizar compra</button>
+      </div>
+
+      <!-- Modal de compra directa -->
+      <div id="checkout-modal" class="checkout-modal hidden">
+        <div class="checkout-box">
+          <h2>Finalizar Compra</h2>
+          <p id="checkout-product"></p>
+          <button class="btn-shop" id="confirm-purchase">Confirmar pago</button>
+          <button class="btn-shop" id="close-checkout">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Sección Sobre Nosotros -->
+<section id="about-section" class="hidden" aria-label="Sobre nosotros">
+  <div class="about-container">
+    <h1 class="about-title">Sobre Nosotros</h1>
+    <p class="about-intro">
+      En <strong>Liftogarden</strong> creemos que cualquiera puede disfrutar de plantas sanas, 
+      sin importar su experiencia o tiempo libre. Nuestra misión es simplificar el cuidado de tus plantas 
+      con tecnología accesible y amigable.
+    </p>
+
+    <div class="about-grid">
+      <article class="about-card">
+        <h2>🌱 Nuestra historia</h2>
+        <p>
+          Todo comenzó cuando vimos que muchas plantas en hogares y oficinas se marchitaban por falta de atención. 
+          Decidimos crear una maceta inteligente que automatizara el cuidado básico, 
+          combinando sensores, notificaciones y simplicidad.
+        </p>
+      </article>
+
+      <article class="about-card">
+        <h2>👩‍💻 Nuestro equipo</h2>
+        <p>
+          Somos un grupo de entusiastas de la tecnología y la naturaleza. 
+          Con experiencia en electrónica, programación y diseño, 
+          trabajamos para que cada usuario disfrute de un producto confiable y fácil de usar.
+        </p>
+      </article>
+
+
+      <article class="about-card">
+        <h2>🌍 Misión y visión</h2>
+        <p>
+          Nuestra misión es democratizar la jardinería inteligente. 
+          Queremos que Liftogarden esté presente en cada hogar y oficina, 
+          ayudando a crear espacios más verdes, saludables y sostenibles.
+        </p>
+      </article>
+    </div>
+  </div>
+<div class="about-progress">
+  <h2>📊 Progreso del Proyecto</h2>
+  <p>
+    Liftogarden es el resultado de un proceso de investigación, pruebas y desarrollo. 
+    Cada etapa, desde las primeras presentaciones hasta la programación y el armado de la maceta, 
+    formó parte de nuestro aprendizaje y evolución.
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h3>📑 1ra Presentación</h3>
+      <p>Exposición inicial de la idea y validación del concepto.</p>
+      <a href="https://www.notion.so/1ra-presentaci-n-2011a5aff9638165aef4db712f1fe63e?pvs=21" target="_blank">Ver más</a>
+    </div>
+
+    <div class="timeline-item">
+      <h3>🎤 2da Presentación</h3>
+      <p>Mejoras en las diapositivas y redacción del guion expositivo.</p>
+      <a href="https://www.notion.so/2da-presentaci-n-2081a5aff9638023b2e3ca7465e42c43?pvs=21" target="_blank">Ver más</a>
+    </div>
+
+    <div class="timeline-item">
+      <h3>💻 Desarrollo Técnico</h3>
+      <p>Programación del boceto, creación del login, dashboard, tutorial y base de datos.</p>
+      <a href="https://www.notion.so/Back-end-Proyecto-2081a5aff96380db9633d72fed4afec0?pvs=21" target="_blank">Ver más</a>
+    </div>
+
+    <div class="timeline-item">
+      <h3>⚙️ Hardware y Conexiones</h3>
+      <p>Armado de la maceta, instalación de sensores, pruebas con ESP y verificación de derrames en el modelo 3D.</p>
+      <a href="https://www.notion.so/Hardware-Proyecto-2081a5aff963803da1f4fded79a07f2f?pvs=21" target="_blank">Ver más</a>
+    </div>
+
+    <div class="timeline-item">
+      <h3>🚀 3ra Presentación</h3>
+      <p>Versión final del proyecto con mejoras en base de datos, conectividad y presentación general.</p>
+      <a href="https://www.notion.so/3era-presentaci-n-20d1a5aff963804098ace34ecf1eb2b2?pvs=21" target="_blank">Ver más</a>
+    </div>
+  </div>
+</div>
+
+
+</section>
+
+
+</main>
+
+<!-- Modal para nueva planta -->
+<div id="new-plant-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+  <div class="modal">
+    <h2 id="modal-title">Añadir Nueva Planta</h2>
+    <form id="new-plant-form" action="planta.php" method="post">
+      <label for="plant-name-input">Nombre de la Planta</label>
+      <input type="text" id="plant-name-input" name="plantName" required aria-required="true" autocomplete="off" placeholder="Introduce el nombre de la planta" />
+      <label for="consumption-select">Tipo de Consumo</label>
+      <select id="consumption-select" name="consumption" required aria-required="true">
+        <option value="">Selecciona el consumo</option>
+        <option value="low">Bajo</option>
+        <option value="medium">Medio</option>
+        <option value="high">Alto</option>
+      </select>
+      <label for="water-level">Nivel de Agua Actual (ml)</label>
+      <input type="number" id="water-level" name="water" min="0" max="1000" value="1000" />   
+      <label for="vitamins-level">Nivel de Vitaminas Actual (ml)</label>
+      <input type="number" id="vitamins-level" name="vitamins" min="0" max="1000" value="1000" />  
+      <label for="fertilizer-level">Nivel de Fertilizante Actual (ml)</label>
+      <input type="number" id="fertilizer-level" name="fertilizer" min="0" max="1000" value="1000" />
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel" id="modal-cancel-btn">Cancelar</button>
+        <button type="submit" class="btn-submit" name="añadir">Añadir Planta</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="js.js" defer></script>
+</body>
+</html>
